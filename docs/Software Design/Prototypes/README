@@ -1,0 +1,2 @@
+- Video only works in ios devices beacuse it's currently formatted as mov
+- Everything below the bottom navigation bar signifies that it's scrollable and hidden to users in inital state.
