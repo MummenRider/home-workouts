@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "613872655831",
+    "project_id": "letsgetphysical-f73d5",
+    "storage_bucket": "letsgetphysical-f73d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613872655831:android:3ac196d3ead9c4937b7f92",
+        "android_client_info": {
+          "package_name": "com.clark.letsgetphysical"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613872655831-1tc3fh1qvktvh9s23tfvr9sj30qbonan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI0ZelXuqxk4_OQ3bj1Mh52Nly7YnJ2jQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613872655831-1tc3fh1qvktvh9s23tfvr9sj30qbonan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
