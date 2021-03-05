@@ -1,4 +1,4 @@
-package com.example.app
+package com.clark.letsgetphysical
 
 import io.flutter.embedding.android.FlutterActivity
 
