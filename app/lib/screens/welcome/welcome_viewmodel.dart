@@ -7,4 +7,5 @@ class WelcomeViewModel extends BaseViewModel {
   final _navService = locator<NavigationService>();
 
   void goToSignInScreen() => _navService.navigateTo(Routes.signInView);
+  void goToSignUpScreen() => _navService.navigateTo(Routes.signUpView);
 }

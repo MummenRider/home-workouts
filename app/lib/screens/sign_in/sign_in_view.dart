@@ -2,48 +2,55 @@ import 'package:app/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class SignInView extends StatefulWidget {
-  @override
-  _SignInViewState createState() => _SignInViewState();
-}
+class SignInView extends StatelessWidget {
+  const SignInView({Key key}) : super(key: key);
 
-class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SignInViewModel>.reactive(
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    return ViewModelBuilder<SignInViewModel>.nonReactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Sign In'),
         ),
-        body: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Stepper(
-                  type: StepperType.vertical,
-                  currentStep: model.currentStepIndex,
-                  onStepTapped: (step) => model.tapped(step),
-                  onStepContinue: model.continueStep,
-                  onStepCancel: model.cancelStep,
-                  steps: [
-                    Step(
-                      title: Text("Step 1 title"),
-                      content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Content for Step 1")),
-                      isActive: model.boolstepIsActive(),
-                      state: model.stateStatus(0),
+        body: Form(
+          child: Padding(
+            padding: const EdgeInsets.all(50.0),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Email Address',
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: emailController,
                     ),
-                    Step(
-                      title: Text("Step 2 title"),
-                      content: Text("Content for Step 2"),
-                      isActive: model.boolstepIsActive(),
-                      state: model.stateStatus(1),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: passwordController,
                     ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () => model.signIn(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim()),
+                      child: Text('Sign In'),
+                      style:
+                          ElevatedButton.styleFrom(primary: Colors.purple[200]),
+                    )
                   ],
-                ),
-              )
-            ],
+                ))
+              ],
+            ),
           ),
         ),
       ),

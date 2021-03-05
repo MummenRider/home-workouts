@@ -27,7 +27,7 @@ class WelcomeView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       child: Text('Sign Up'),
-                      onPressed: () => print('lol'),
+                      onPressed: () => model.goToSignUpScreen(),
                     ),
                   ],
                 ),

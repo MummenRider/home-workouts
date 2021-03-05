@@ -9,6 +9,11 @@ class LetsGetPhysical extends StatelessWidget {
       onGenerateRoute: LetsGetPhysicalRouter(),
       navigatorKey: StackedService.navigatorKey,
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(primary: Colors.blue),
+        ),
+      ),
     );
   }
 }

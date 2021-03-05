@@ -1,42 +1,19 @@
+import 'package:app/services/auth/auth_service.dart';
+import 'package:app/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class SignInViewModel extends BaseViewModel {
-  StepState _state;
-  int _currentStep = 0;
+  final _auth = locator<AuthService>();
+  final _dialog = locator<DialogService>();
 
-  int get currentStepIndex => _currentStep;
-
-  void tapped(int step) {
-    _currentStep = step;
-    notifyListeners();
-  }
-
-  void continueStep() {
-    if (_currentStep >= 1) return;
-    _currentStep++;
-    notifyListeners();
-  }
-
-  void cancelStep() {
-    if (_currentStep <= 0) return;
-    _currentStep--;
-    notifyListeners();
-  }
-
-  boolstepIsActive() {
-    if (_currentStep >= 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  StepState stateStatus(int index) {
-    if (_currentStep > index) {
-      return StepState.complete;
-    } else {
-      return StepState.disabled;
-    }
-  }
+  void signIn({@required String email, @required String password}) async =>
+      _auth
+          .signIn(email, password)
+          .then((_) => print('Sign in baby'))
+          .catchError((e) => _dialog.showDialog(
+                title: 'Sign in failed',
+                description: e.message,
+              ));
 }
