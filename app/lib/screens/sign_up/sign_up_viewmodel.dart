@@ -1,42 +1,36 @@
+import 'package:app/models/user_account.dart';
+import 'package:app/services/auth/auth_service.dart';
+import 'package:app/services/database/db_service.dart';
+import 'package:app/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class SignUpViewModel extends BaseViewModel {
-  StepState _state;
-  int _currentStep = 0;
+  final _dialog = locator<DialogService>();
+  final _auth = locator<AuthService>();
+  final _db = locator<FirestoreService>();
+  final _nav = locator<NavigationService>();
 
-  int get currentStepIndex => _currentStep;
-
-  void tapped(int step) {
-    _currentStep = step;
-    notifyListeners();
-  }
-
-  void continueStep() {
-    if (_currentStep >= 1) return;
-    _currentStep++;
-    notifyListeners();
-  }
-
-  void cancelStep() {
-    if (_currentStep <= 0) return;
-    _currentStep--;
-    notifyListeners();
-  }
-
-  boolstepIsActive(int index) {
-    if (_currentStep >= index) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  StepState stateStatus(int index) {
-    if (_currentStep > index) {
-      return StepState.complete;
-    } else {
-      return StepState.disabled;
-    }
+  Future<void> signUp({
+    @required String firstName,
+    @required String lastName,
+    @required String emailAddress,
+    @required String password,
+  }) async {
+    setBusy(true);
+    _auth
+        .signUp(emailAddress: emailAddress, password: password)
+        .then((response) => _db.setUser(UserAccount(
+              firstName: firstName,
+              lastName: lastName,
+              email: response.user.email,
+              userId: response.user.uid,
+            )))
+        .whenComplete(() => setBusy(false))
+        .catchError((e) => _dialog.showDialog(
+              title: 'Sign Up failed',
+              description: e.code.toString(),
+            ));
   }
 }

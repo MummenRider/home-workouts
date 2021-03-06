@@ -1,44 +1,84 @@
+import 'package:app/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:app/screens/sign_up/sign_up_viewmodel.dart';
+import 'package:app/widgets/busy_overlay.dart';
+import 'package:app/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class SignUpView extends StatelessWidget {
+class SignUpView extends StatefulWidget {
+  const SignUpView({Key key}) : super(key: key);
+
+  @override
+  _SignUpViewState createState() => _SignUpViewState();
+}
+
+class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
+    final _globalFormKey = GlobalKey<FormState>();
+    final _firstNameController = TextEditingController();
+    final _lastNameController = TextEditingController();
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
+
     return ViewModelBuilder<SignUpViewModel>.reactive(
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('Sign Up'),
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Expanded(
-                child: Stepper(
-                  type: StepperType.vertical,
-                  currentStep: model.currentStepIndex,
-                  onStepTapped: (step) => model.tapped(step),
-                  onStepContinue: model.continueStep,
-                  onStepCancel: model.cancelStep,
-                  steps: [
-                    Step(
-                      title: Text("Step 1 title"),
-                      content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text("Content for Step 1")),
-                      isActive: model.boolstepIsActive(0),
-                      state: model.stateStatus(0),
-                    ),
-                    Step(
-                      title: Text("Step 2 title"),
-                      content: Text("Content for Step 2"),
-                      isActive: model.boolstepIsActive(1),
-                      state: model.stateStatus(1),
-                    ),
-                  ],
-                ),
-              )
-            ],
+      builder: (context, model, child) => BusyOverlayScreen(
+        show: model.isBusy,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Sign In'),
+          ),
+          body: Form(
+            key: _globalFormKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TemplateTextField(
+                        controller: _firstNameController,
+                        textLabel: 'First Name',
+                      ),
+                      const SizedBox(height: 16),
+                      TemplateTextField(
+                        controller: _lastNameController,
+                        textLabel: 'Last Name',
+                      ),
+                      const SizedBox(height: 16),
+                      TemplateTextField(
+                        controller: _emailController,
+                        textLabel: 'Email address',
+                      ),
+                      const SizedBox(height: 16),
+                      TemplateTextField(
+                        controller: _passwordController,
+                        textLabel: 'Password',
+                      ),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_globalFormKey.currentState.validate()) {
+                            model.signUp(
+                              firstName: _firstNameController.text.trim(),
+                              lastName: _lastNameController.text.trim(),
+                              emailAddress: _emailController.text.trim(),
+                              password: _passwordController.text.trim(),
+                            );
+                          }
+                        },
+                        child: Text('Sign Up'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.purple[200]),
+                      )
+                    ],
+                  ))
+                ],
+              ),
+            ),
           ),
         ),
       ),
