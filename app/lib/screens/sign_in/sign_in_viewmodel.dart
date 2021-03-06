@@ -12,8 +12,10 @@ class SignInViewModel extends BaseViewModel {
       _auth
           .signIn(email, password)
           .then((_) => print('Sign in baby'))
-          .catchError((e) => _dialog.showDialog(
-                title: 'Sign in failed',
-                description: e.message,
-              ));
+          .catchError((e) {
+        _dialog.showDialog(
+          title: 'Sign in failed',
+          description: e.message,
+        );
+      });
 }

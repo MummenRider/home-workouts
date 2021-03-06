@@ -1,4 +1,6 @@
 import 'package:app/screens/sign_in/sign_in_viewmodel.dart';
+import 'package:app/widgets/busy_overlay.dart';
+import 'package:app/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -7,49 +9,53 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    final _globalFormKey = GlobalKey<FormState>();
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
     return ViewModelBuilder<SignInViewModel>.nonReactive(
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('Sign In'),
-        ),
-        body: Form(
-          child: Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Column(
-              children: [
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        border: OutlineInputBorder(),
+      builder: (context, model, child) => BusyOverlayScreen(
+        show: model.isBusy,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Sign In'),
+          ),
+          body: Form(
+            key: _globalFormKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TemplateTextField(
+                        controller: _emailController,
+                        textLabel: 'Email address',
                       ),
-                      controller: emailController,
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        border: OutlineInputBorder(),
+                      const SizedBox(height: 16),
+                      TemplateTextField(
+                        controller: _passwordController,
+                        textLabel: 'Password',
                       ),
-                      controller: passwordController,
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () => model.signIn(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim()),
-                      child: Text('Sign In'),
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.purple[200]),
-                    )
-                  ],
-                ))
-              ],
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_globalFormKey.currentState.validate()) {
+                            model.signIn(
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim());
+                          }
+                        },
+                        child: Text('Sign In'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.purple[200]),
+                      )
+                    ],
+                  ))
+                ],
+              ),
             ),
           ),
         ),
