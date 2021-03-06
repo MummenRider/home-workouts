@@ -1,4 +1,3 @@
-import 'package:app/screens/sign_in/sign_in_viewmodel.dart';
 import 'package:app/screens/sign_up/sign_up_viewmodel.dart';
 import 'package:app/widgets/busy_overlay.dart';
 import 'package:app/widgets/text_fields.dart';
