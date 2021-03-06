@@ -21,16 +21,21 @@ class SignUpViewModel extends BaseViewModel {
     setBusy(true);
     _auth
         .signUp(emailAddress: emailAddress, password: password)
-        .then((response) => _db.setUser(UserAccount(
-              firstName: firstName,
-              lastName: lastName,
-              email: response.user.email,
-              userId: response.user.uid,
-            )))
+        .then((response) {
+          _db.setUser(UserAccount(
+            firstName: firstName,
+            lastName: lastName,
+            email: response.user.email,
+            userId: response.user.uid,
+          ));
+          _nav.back();
+        })
         .whenComplete(() => setBusy(false))
-        .catchError((e) => _dialog.showDialog(
-              title: 'Sign Up failed',
-              description: e.code.toString(),
-            ));
+        .catchError((e) {
+          _dialog.showDialog(
+            title: 'Sign Up failed',
+            description: e.code.toString(),
+          );
+        });
   }
 }
