@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TemplateTextField extends StatelessWidget {
   TemplateTextField({
     Key key,
     @required TextEditingController controller,
     @required String textLabel,
+    this.inputType,
+    this.inputFormatters,
   })  : _controller = controller,
         _textLabel = textLabel,
         super(key: key);
 
   final TextEditingController _controller;
   final String _textLabel;
+  final TextInputType inputType;
+  final List<TextInputFormatter> inputFormatters;
   @override
   Widget build(BuildContext context) {
     return TextFormField(

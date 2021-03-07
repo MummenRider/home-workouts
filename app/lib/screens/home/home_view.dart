@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({Key key}) : super(key: key);
+  final String userId;
+  HomeView({@required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +12,20 @@ class HomeView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Home Page'),
+          leading: GestureDetector(
+            onTap: model.goToProfile,
+            child: Icon(Icons.account_circle_outlined),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(userId),
+              ElevatedButton(
+                  onPressed: model.goToWelcomeScreen, child: Text('Sign out'))
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => HomeViewModel(),

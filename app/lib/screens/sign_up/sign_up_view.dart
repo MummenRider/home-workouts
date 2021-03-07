@@ -2,6 +2,7 @@ import 'package:app/screens/sign_up/sign_up_viewmodel.dart';
 import 'package:app/widgets/busy_overlay.dart';
 import 'package:app/widgets/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUpView extends StatefulWidget {
@@ -19,6 +20,7 @@ class _SignUpViewState extends State<SignUpView> {
     final _lastNameController = TextEditingController();
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
+    final _phoneNumberController = TextEditingController();
 
     return ViewModelBuilder<SignUpViewModel>.reactive(
       builder: (context, model, child) => BusyOverlayScreen(
@@ -29,7 +31,7 @@ class _SignUpViewState extends State<SignUpView> {
           ),
           body: Form(
             key: _globalFormKey,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Padding(
               padding: const EdgeInsets.all(50.0),
               child: Column(
@@ -57,6 +59,20 @@ class _SignUpViewState extends State<SignUpView> {
                         controller: _passwordController,
                         textLabel: 'Password',
                       ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _phoneNumberController,
+                        decoration: InputDecoration(
+                          labelText: 'Phone number',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          PhoneInputFormatter(),
+                        ],
+                      ),
                       const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
@@ -66,6 +82,7 @@ class _SignUpViewState extends State<SignUpView> {
                               lastName: _lastNameController.text.trim(),
                               emailAddress: _emailController.text.trim(),
                               password: _passwordController.text.trim(),
+                              phoneNumber: _phoneNumberController.text.trim(),
                             );
                           }
                         },

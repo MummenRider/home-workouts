@@ -2,6 +2,7 @@ import 'package:app/models/user_account.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
 import 'package:app/services/service_locator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -17,6 +18,7 @@ class SignUpViewModel extends BaseViewModel {
     @required String lastName,
     @required String emailAddress,
     @required String password,
+    @required String phoneNumber,
   }) async {
     setBusy(true);
     _auth
@@ -27,6 +29,7 @@ class SignUpViewModel extends BaseViewModel {
             lastName: lastName,
             email: response.user.email,
             userId: response.user.uid,
+            phoneNumber: phoneNumber,
           ));
           _nav.back();
         })
