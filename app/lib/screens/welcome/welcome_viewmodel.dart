@@ -1,4 +1,4 @@
-import 'package:app/routes/router.gr.dart';
+import 'package:app/app/app.router.dart';
 import 'package:app/services/service_locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';

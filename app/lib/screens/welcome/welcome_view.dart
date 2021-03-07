@@ -7,6 +7,7 @@ class WelcomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<WelcomeViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
+        appBar: AppBar(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

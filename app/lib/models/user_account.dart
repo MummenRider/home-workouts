@@ -4,12 +4,14 @@ class UserAccount {
   final String firstName;
   final String lastName;
   final String email;
+  final String phoneNumber;
   final String userId;
 
   UserAccount({
     @required this.firstName,
     @required this.lastName,
     @required this.email,
+    @required this.phoneNumber,
     @required this.userId,
   });
 
@@ -21,6 +23,7 @@ class UserAccount {
       firstName: json['firstName'],
       lastName: json['lastName'],
       email: json['email'],
+      phoneNumber: json['phone'],
     );
   }
 
@@ -28,12 +31,17 @@ class UserAccount {
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
+        'phone': phoneNumber,
         'userId': userId,
       };
 
   @override
   int get hashCode =>
-      firstName.hashCode ^ lastName.hashCode ^ email.hashCode ^ userId.hashCode;
+      firstName.hashCode ^
+      lastName.hashCode ^
+      email.hashCode ^
+      userId.hashCode ^
+      phoneNumber.hashCode;
 
   @override
   bool operator ==(other) {
@@ -41,6 +49,7 @@ class UserAccount {
         other.firstName == firstName &&
         other.lastName == lastName &&
         other.email == email &&
+        other.phoneNumber == phoneNumber &&
         other.userId == userId;
   }
 }
