@@ -83,9 +83,7 @@ class StackedRouter extends RouterBase {
       );
     },
     UserProfileEditView: (data) {
-      var args = data.getArgs<UserProfileEditViewArguments>(
-        orElse: () => UserProfileEditViewArguments(),
-      );
+      var args = data.getArgs<UserProfileEditViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) => UserProfileEditView(account: args.account),
         settings: data,
@@ -113,5 +111,5 @@ class UserProfileViewArguments {
 /// UserProfileEditView arguments holder class
 class UserProfileEditViewArguments {
   final UserAccount account;
-  UserProfileEditViewArguments({this.account});
+  UserProfileEditViewArguments({@required this.account});
 }
