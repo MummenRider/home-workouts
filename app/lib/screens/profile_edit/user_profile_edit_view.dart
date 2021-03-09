@@ -7,7 +7,7 @@ import 'package:stacked/stacked.dart';
 
 class UserProfileEditView extends StatelessWidget {
   final UserAccount account;
-  UserProfileEditView({this.account});
+  UserProfileEditView({@required this.account});
   final _globalFormKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();

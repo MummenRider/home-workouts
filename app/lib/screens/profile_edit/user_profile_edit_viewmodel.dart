@@ -1,5 +1,4 @@
 import 'package:app/models/user_account.dart';
-import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
 import 'package:app/services/service_locator.dart';
 import 'package:flutter/material.dart';
