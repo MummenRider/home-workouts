@@ -26,7 +26,9 @@ class UserProfileEditView extends StatelessWidget {
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          leading: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () => model.cancelEditProfile()),
         ),
         body: Form(
           key: _globalFormKey,

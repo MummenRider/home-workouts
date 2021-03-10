@@ -6,9 +6,6 @@ class AuthService {
 
   User user() => _firebaseAuth.currentUser;
 
-  /// Listens to session auth state
-  Stream<User> currentUser() => _firebaseAuth.authStateChanges();
-
   Future<UserCredential> signUp({
     @required String emailAddress,
     @required String password,
@@ -21,4 +18,7 @@ class AuthService {
   Future<UserCredential> signIn(String email, String password) async =>
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+
+  Future<bool> hasUserLoggedInBefore() async =>
+      _firebaseAuth.currentUser != null;
 }

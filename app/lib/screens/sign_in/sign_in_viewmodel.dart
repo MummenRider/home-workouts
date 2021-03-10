@@ -14,8 +14,7 @@ class SignInViewModel extends BaseViewModel {
     _auth
         .signIn(email, password)
         .then((value) {
-          _nav.navigateTo(Routes.homeView,
-              arguments: HomeViewArguments(userId: value.user.uid));
+          _nav.navigateTo(Routes.homeView);
         })
         .whenComplete(() => setBusy(false))
         .catchError((e) {
