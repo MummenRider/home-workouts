@@ -15,16 +15,19 @@ import '../screens/profile/user_profile_view.dart';
 import '../screens/profile_edit/user_profile_edit_view.dart';
 import '../screens/sign_in/sign_in_view.dart';
 import '../screens/sign_up/sign_up_view.dart';
+import '../screens/splash/splash_view.dart';
 import '../screens/welcome/welcome_view.dart';
 
 class Routes {
-  static const String welcomeView = '/';
+  static const String splashView = '/';
+  static const String welcomeView = '/welcome-view';
   static const String homeView = '/home-view';
   static const String signInView = '/sign-in-view';
   static const String signUpView = '/sign-up-view';
   static const String userProfileView = '/user-profile-view';
   static const String userProfileEditView = '/user-profile-edit-view';
   static const all = <String>{
+    splashView,
     welcomeView,
     homeView,
     signInView,
@@ -38,6 +41,7 @@ class StackedRouter extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
+    RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.signInView, page: SignInView),
@@ -48,6 +52,12 @@ class StackedRouter extends RouterBase {
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, StackedRouteFactory>{
+    SplashView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SplashView(),
+        settings: data,
+      );
+    },
     WelcomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => WelcomeView(),
@@ -55,9 +65,8 @@ class StackedRouter extends RouterBase {
       );
     },
     HomeView: (data) {
-      var args = data.getArgs<HomeViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeView(userId: args.userId),
+        builder: (context) => HomeView(),
         settings: data,
       );
     },
@@ -95,12 +104,6 @@ class StackedRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
-
-/// HomeView arguments holder class
-class HomeViewArguments {
-  final String userId;
-  HomeViewArguments({@required this.userId});
-}
 
 /// UserProfileView arguments holder class
 class UserProfileViewArguments {

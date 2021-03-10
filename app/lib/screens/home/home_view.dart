@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
-  final String userId;
-  HomeView({@required this.userId});
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -21,7 +18,7 @@ class HomeView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(userId),
+              Text('Home Screen'),
               ElevatedButton(
                   onPressed: model.goToWelcomeScreen, child: Text('Sign out'))
             ],

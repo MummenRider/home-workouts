@@ -19,7 +19,7 @@ class UserProfileEditViewModel extends BaseViewModel {
     print(_account.firstName);
     var updateUser = UserAccount(
       firstName: fname,
-      lastName: _account.lastName,
+      lastName: lname,
       email: email,
       userId: _account.userId,
       phoneNumber: phoneNumber,
@@ -33,4 +33,6 @@ class UserProfileEditViewModel extends BaseViewModel {
     _account = accounts;
     notifyListeners();
   }
+
+  void cancelEditProfile() => _nav.back();
 }
