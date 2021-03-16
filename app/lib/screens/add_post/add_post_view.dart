@@ -60,25 +60,35 @@ class AddPostView extends StatelessWidget {
                       textLabel: 'Description',
                     ),
                     const SizedBox(height: 16),
-                    GestureDetector(
-                      // When we tap we call selectImage
-                      onTap: () => print('pressed image'),
-                      child: Container(
+                    Expanded(
+                      child: GestureDetector(
+                        // When we tap we call selectImage
+                        onTap: () => model.selectImage(),
+                        child: Container(
                           height: 250,
                           decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(10)),
                           alignment: Alignment.center,
                           // If the selected image is null we show "Tap to add post image"
-                          child: Text(
-                            'Tap to add post image',
-                            style: TextStyle(color: Colors.grey[500]),
-                          )),
+                          child: model.selectedImage == null
+                              ? Text(
+                                  'Tap to add post image',
+                                  style: TextStyle(color: Colors.grey[400]),
+                                )
+                              // If we have a selected image we want to show it
+                              : Image.file(model.selectedImage),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
-                        if (_globalFormKey.currentState.validate()) {}
+                        if (_globalFormKey.currentState.validate()) {
+                          model.uploadImage(
+                              title: _titleController.text,
+                              description: _descriptionController.text);
+                        }
                       },
                       child: Text('Add Post'),
                       style:
