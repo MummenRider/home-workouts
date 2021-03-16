@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../models/user_account.dart';
+import '../screens/add_post/add_post_view.dart';
 import '../screens/home/home_view.dart';
+import '../screens/news_feed/news_feed_view.dart';
 import '../screens/profile/user_profile_view.dart';
 import '../screens/profile_edit/user_profile_edit_view.dart';
 import '../screens/sign_in/sign_in_view.dart';
@@ -22,6 +24,8 @@ class Routes {
   static const String splashView = '/';
   static const String welcomeView = '/welcome-view';
   static const String homeView = '/home-view';
+  static const String newsFeedView = '/news-feed-view';
+  static const String addPostView = '/add-post-view';
   static const String signInView = '/sign-in-view';
   static const String signUpView = '/sign-up-view';
   static const String userProfileView = '/user-profile-view';
@@ -30,6 +34,8 @@ class Routes {
     splashView,
     welcomeView,
     homeView,
+    newsFeedView,
+    addPostView,
     signInView,
     signUpView,
     userProfileView,
@@ -44,6 +50,8 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.newsFeedView, page: NewsFeedView),
+    RouteDef(Routes.addPostView, page: AddPostView),
     RouteDef(Routes.signInView, page: SignInView),
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.userProfileView, page: UserProfileView),
@@ -67,6 +75,21 @@ class StackedRouter extends RouterBase {
     HomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomeView(),
+        settings: data,
+      );
+    },
+    NewsFeedView: (data) {
+      var args = data.getArgs<NewsFeedViewArguments>(
+        orElse: () => NewsFeedViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => NewsFeedView(key: args.key),
+        settings: data,
+      );
+    },
+    AddPostView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const AddPostView(),
         settings: data,
       );
     },
@@ -104,6 +127,12 @@ class StackedRouter extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// NewsFeedView arguments holder class
+class NewsFeedViewArguments {
+  final Key key;
+  NewsFeedViewArguments({this.key});
+}
 
 /// UserProfileView arguments holder class
 class UserProfileViewArguments {

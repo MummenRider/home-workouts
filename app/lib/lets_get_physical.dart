@@ -9,6 +9,10 @@ class LetsGetPhysical extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: StackedService.navigatorKey,
       onGenerateRoute: StackedRouter().onGenerateRoute,
+      theme: ThemeData(
+        primaryColor: Colors.purple[300],
+        accentColor: Colors.cyan[600],
+      ),
     );
   }
 }
