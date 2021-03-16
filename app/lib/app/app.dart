@@ -1,4 +1,6 @@
+import 'package:app/screens/add_post/add_post_view.dart';
 import 'package:app/screens/home/home_view.dart';
+import 'package:app/screens/news_feed/news_feed_view.dart';
 import 'package:app/screens/profile/user_profile_view.dart';
 import 'package:app/screens/profile_edit/user_profile_edit_view.dart';
 import 'package:app/screens/sign_in/sign_in_view.dart';
@@ -11,6 +13,8 @@ import 'package:stacked/stacked_annotations.dart';
   MaterialRoute(page: SplashView, initial: true),
   MaterialRoute(page: WelcomeView),
   MaterialRoute(page: HomeView),
+  MaterialRoute(page: NewsFeedView),
+  MaterialRoute(page: AddPostView),
   MaterialRoute(page: SignInView),
   MaterialRoute(page: SignUpView),
   MaterialRoute(page: UserProfileView),
