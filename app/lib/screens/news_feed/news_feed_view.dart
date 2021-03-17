@@ -9,6 +9,15 @@ class NewsFeedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<NewsFeedViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              tooltip: 'Sign Out',
+              onPressed: () => model.goToWelcomeScreen(),
+            )
+          ],
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

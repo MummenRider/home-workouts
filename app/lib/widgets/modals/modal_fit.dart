@@ -1,8 +1,6 @@
 import 'package:app/app/app.router.dart';
-import 'package:app/widgets/modals/modal_will_scope.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ModalFit extends StatelessWidget {
   const ModalFit({Key key}) : super(key: key);

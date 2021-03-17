@@ -1,4 +1,3 @@
-import 'package:app/app/app.router.dart';
 import 'package:app/screens/add_post/add_post_view.dart';
 import 'package:app/services/service_locator.dart';
 import 'package:stacked/stacked.dart';
