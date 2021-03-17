@@ -1,11 +1,8 @@
 import 'package:app/screens/home/home_viewmodel.dart';
 import 'package:app/screens/news_feed/news_feed_view.dart';
 import 'package:app/screens/profile/user_profile_view.dart';
-import 'package:app/widgets/modals/modal_fit.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
-
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatefulWidget {

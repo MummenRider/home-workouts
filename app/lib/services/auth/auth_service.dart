@@ -10,15 +10,17 @@ class AuthService {
     @required String emailAddress,
     @required String password,
   }) async =>
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      _firebaseAuth.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
 
   Future<UserCredential> signIn(String email, String password) async =>
-      await _firebaseAuth.signInWithEmailAndPassword(
+      _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
   Future<bool> hasUserLoggedInBefore() async =>
       _firebaseAuth.currentUser != null;
+
+  Future<void> signOut() async => _firebaseAuth.signOut();
 }
