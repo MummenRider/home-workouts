@@ -1,3 +1,4 @@
+import 'package:app/models/new_story.dart';
 import 'package:app/models/user_account.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -18,4 +19,7 @@ class FirestoreService {
         .get()
         .then((snapshot) => UserAccount.fromJSON(snapshot.data()));
   }
+
+  Future<void> setStory(Story story) async =>
+      _firestore.collection('stories').doc(story.storyId).set(story.toJSON());
 }
