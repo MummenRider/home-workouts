@@ -45,7 +45,7 @@ class AddPostViewModel extends BaseViewModel {
     @required String title,
     @required String description,
   }) async {
-    _dbStorage.uploadImage(_selectedImage, Uuid().v4()).then((imageUrl) {
+    _dbStorage.uploadStoryImage(_selectedImage, Uuid().v4()).then((imageUrl) {
       _dbFiretore.setStory(Story(
           title: title,
           description: description,

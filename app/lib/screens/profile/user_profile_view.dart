@@ -1,4 +1,5 @@
 import 'package:app/screens/profile/user_profile_viewmodel.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,12 +21,45 @@ class UserProfileView extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            child: Icon(
-                              Icons.account_circle_sharp,
-                              size: 30.0,
-                              color: Colors.green[400],
-                            ),
-                          ),
+                              child: ExtendedImage.network(
+                            model.user != null
+                                ? model.user.displayProfileURL
+                                : '',
+                            width: 30,
+                            height: 30,
+                            fit: BoxFit.cover,
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: Colors.grey[800], width: 1.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            loadStateChanged: (ExtendedImageState state) {
+                              if (state.extendedImageLoadState ==
+                                  LoadState.failed) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  width: 30,
+                                  height: 30,
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.grey[800],
+                                  ),
+                                );
+                              } else if (state.extendedImageLoadState ==
+                                  LoadState.loading) {
+                                return Image.asset(
+                                  'assets/loading.gif',
+                                  scale: .5,
+                                  fit: BoxFit.contain,
+                                );
+                              } else {
+                                return null;
+                              }
+                            },
+                          )),
                           SizedBox(width: 30.0),
                           Text(
                             '${model.user.firstName} ${model.user.lastName}',
@@ -89,7 +123,12 @@ class UserProfileView extends StatelessWidget {
                   ),
                 ),
               )
-            : CircularProgressIndicator(),
+            : CircularProgressIndicator(
+                strokeWidth: 3,
+                valueColor: AlwaysStoppedAnimation(
+                  Theme.of(context).primaryColor,
+                ),
+              ),
       ),
       viewModelBuilder: () => UserProfileViewModel(),
     );

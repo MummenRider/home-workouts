@@ -5,6 +5,7 @@ class UserAccount {
   final String lastName;
   final String email;
   final String phoneNumber;
+  final String displayProfileURL;
   final String userId;
 
   UserAccount({
@@ -13,6 +14,7 @@ class UserAccount {
     @required this.email,
     @required this.phoneNumber,
     @required this.userId,
+    @required this.displayProfileURL,
   });
 
   factory UserAccount.fromJSON(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class UserAccount {
       lastName: json['lastName'],
       email: json['email'],
       phoneNumber: json['phone'],
+      displayProfileURL: json['displayProfileURL'],
     );
   }
 
@@ -33,6 +36,7 @@ class UserAccount {
         'email': email,
         'phone': phoneNumber,
         'userId': userId,
+        'displayProfileURL': displayProfileURL,
       };
 
   @override
@@ -41,6 +45,7 @@ class UserAccount {
       lastName.hashCode ^
       email.hashCode ^
       userId.hashCode ^
+      displayProfileURL.hashCode ^
       phoneNumber.hashCode;
 
   @override
@@ -50,6 +55,7 @@ class UserAccount {
         other.lastName == lastName &&
         other.email == email &&
         other.phoneNumber == phoneNumber &&
+        other.displayProfileURL == displayProfileURL &&
         other.userId == userId;
   }
 }

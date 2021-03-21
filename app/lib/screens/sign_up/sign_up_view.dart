@@ -1,6 +1,7 @@
 import 'package:app/screens/sign_up/sign_up_viewmodel.dart';
 import 'package:app/widgets/busy_overlay.dart';
 import 'package:app/widgets/text_fields.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:stacked/stacked.dart';
@@ -40,6 +41,63 @@ class _SignUpViewState extends State<SignUpView> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      GestureDetector(
+                        onTap: () => model.selectImage(),
+                        child: CircleAvatar(
+                          child: model.selectedImage != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: ExtendedImage.file(
+                                    model.selectedImage,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                    loadStateChanged:
+                                        (ExtendedImageState state) {
+                                      if (state.extendedImageLoadState ==
+                                          LoadState.failed) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          width: 100,
+                                          height: 100,
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.grey[800],
+                                          ),
+                                        );
+                                      } else if (state.extendedImageLoadState ==
+                                          LoadState.loading) {
+                                        return Image.asset(
+                                          'assets/loading.gif',
+                                          scale: .5,
+                                          fit: BoxFit.contain,
+                                        );
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  width: 100,
+                                  height: 100,
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                          radius: 53.0,
+                          backgroundColor: Colors.grey[700],
+                        ),
+                      ),
                       TemplateTextField(
                         controller: _firstNameController,
                         textLabel: 'First Name',

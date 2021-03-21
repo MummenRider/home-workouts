@@ -1,16 +1,56 @@
-import 'package:app/models/user_account.dart';
+import 'dart:io';
+import 'package:app/app/app.router.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
+import 'package:app/services/database/image_storage.dart';
 import 'package:app/services/service_locator.dart';
+import 'package:app/util/assets_to_file_converter.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:uuid/uuid.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final _dialog = locator<DialogService>();
   final _auth = locator<AuthService>();
   final _db = locator<FirestoreService>();
   final _nav = locator<NavigationService>();
+  final _picker = ImagePicker();
+  final _dbStorage = locator<FirebaseStorageService>();
+
+  File _selectedImage;
+  File get selectedImage => _selectedImage;
+
+  String _imageUrl;
+  String get imageUrl => _imageUrl;
+
+  Future<void> selectImage() async {
+    await Permission.photos.request();
+    var permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus.isGranted) {
+      var tempImage = await _picker.getImage(source: ImageSource.gallery);
+      if (tempImage != null) {
+        _selectedImage = File(tempImage.path);
+        notifyListeners();
+      }
+    } else {
+      _dialog.showDialog(
+          title: 'Permission Request',
+          description: 'Photo access gallery denied');
+    }
+  }
+
+  Future<String> uploadUserProfile() async =>
+      _dbStorage.displayProfile(_selectedImage, Uuid().v4()).then((response) {
+        _imageUrl = response;
+        notifyListeners();
+      }).catchError((e) => print(e.toString()));
+
+  Future<void> setImageUrl(File imageFile) async => _imageUrl = await _dbStorage
+      .displayProfile(_selectedImage ?? imageFile, _auth.user().uid);
 
   Future<void> signUp({
     @required String firstName,
@@ -21,23 +61,28 @@ class SignUpViewModel extends BaseViewModel {
   }) async {
     setBusy(true);
     _auth
-        .signUp(emailAddress: emailAddress, password: password)
-        .then((response) {
-          _db.setUser(UserAccount(
-            firstName: firstName,
-            lastName: lastName,
-            email: response.user.email,
-            userId: response.user.uid,
-            phoneNumber: phoneNumber,
-          ));
-          _nav.back();
-        })
+        .signUp(
+          emailAddress: emailAddress,
+          password: password,
+          firstName: firstName,
+          imageUrl: _imageUrl,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+        )
+        .then((_) => getImageFileFromAssets('/default.png'))
+        .then((imageFile) => setImageUrl(imageFile))
+        .then((_) => _db.updateProfileImage(_auth.user().uid, _imageUrl))
+        .then((_) => _auth.updateFirebaseAuth(
+            displayName: firstName, photoURL: _imageUrl))
+        .then((_) => _dialog.showDialog(
+              title: 'Sign Up Success',
+              description: 'Successfully Registered',
+            ))
+        .then((_) => _nav.pushNamedAndRemoveUntil(Routes.welcomeView))
         .whenComplete(() => setBusy(false))
-        .catchError((e) {
-          _dialog.showDialog(
-            title: 'Sign Up failed',
-            description: e.code.toString(),
-          );
-        });
+        .catchError((e) => _dialog.showDialog(
+              title: 'Sign Up failed',
+              description: e.toString(),
+            ));
   }
 }
