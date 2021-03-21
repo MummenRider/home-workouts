@@ -20,7 +20,7 @@ class BusyOverlayScreen extends StatelessWidget {
           child,
           IgnorePointer(
             child: Opacity(
-                opacity: show ? 1.0 : 0.0,
+                opacity: show ? .5 : 0.0,
                 child: Container(
                   width: screenSize.width,
                   height: screenSize.height,
@@ -34,7 +34,7 @@ class BusyOverlayScreen extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                              color: Colors.black)),
                     ],
                   ),
                 )),

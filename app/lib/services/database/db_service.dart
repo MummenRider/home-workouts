@@ -5,8 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   final _firestore = FirebaseFirestore.instance;
 
-  Future<void> setUser(UserAccount user) async =>
-      _firestore.collection('users').doc(user.userId).set(user.toJSON());
+  Future<UserAccount> setUser(UserAccount user) async => _firestore
+      .collection('users')
+      .doc(user.userId)
+      .set(user.toJSON())
+      .then((_) => user);
 
   Stream<UserAccount> getUserInRealTime(String userId) =>
       _firestore.collection('users').doc(userId).snapshots().map(
@@ -22,4 +25,10 @@ class FirestoreService {
 
   Future<void> setStory(Story story) async =>
       _firestore.collection('stories').doc(story.storyId).set(story.toJSON());
+
+  Future<void> updateProfileImage(String userId, String imageUrl) async =>
+      _firestore
+          .collection('users')
+          .doc(userId)
+          .update({'displayProfileURL': imageUrl});
 }

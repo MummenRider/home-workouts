@@ -12,7 +12,7 @@ class UserProfileViewModel extends BaseViewModel {
   final _auth = locator<AuthService>();
 
   UserAccount _user;
-  get user => _user;
+  UserAccount get user => _user;
 
   void loadUserInfo() {
     _db.getUserInRealTime(_auth.user().uid).listen((account) {

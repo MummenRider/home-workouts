@@ -11,7 +11,6 @@ import 'package:stacked/stacked.dart';
 
 import '../models/user_account.dart';
 import '../screens/add_post/add_post_view.dart';
-import '../screens/home/home_view.dart';
 import '../screens/news_feed/news_feed_view.dart';
 import '../screens/profile/user_profile_view.dart';
 import '../screens/profile_edit/user_profile_edit_view.dart';
@@ -23,7 +22,6 @@ import '../screens/welcome/welcome_view.dart';
 class Routes {
   static const String splashView = '/';
   static const String welcomeView = '/welcome-view';
-  static const String homeView = '/home-view';
   static const String newsFeedView = '/news-feed-view';
   static const String addPostView = '/add-post-view';
   static const String signInView = '/sign-in-view';
@@ -33,7 +31,6 @@ class Routes {
   static const all = <String>{
     splashView,
     welcomeView,
-    homeView,
     newsFeedView,
     addPostView,
     signInView,
@@ -49,7 +46,6 @@ class StackedRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.welcomeView, page: WelcomeView),
-    RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.newsFeedView, page: NewsFeedView),
     RouteDef(Routes.addPostView, page: AddPostView),
     RouteDef(Routes.signInView, page: SignInView),
@@ -69,12 +65,6 @@ class StackedRouter extends RouterBase {
     WelcomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => WelcomeView(),
-        settings: data,
-      );
-    },
-    HomeView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeView(),
         settings: data,
       );
     },
