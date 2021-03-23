@@ -1,7 +1,6 @@
 import 'package:app/app/app.router.dart';
 import 'package:app/models/new_story.dart';
 import 'package:app/models/user_account.dart';
-import 'package:app/screens/add_post/add_post_view.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
 import 'package:app/services/service_locator.dart';
@@ -16,6 +15,7 @@ class NewsFeedViewModel extends StreamViewModel {
   final _db = locator<FirestoreService>();
 
   User get userAccount => _auth.user();
+
   UserAccount _user;
   UserAccount get user => _user;
 
@@ -45,13 +45,17 @@ class NewsFeedViewModel extends StreamViewModel {
         );
       });
 
-  Future<bool> onLikeButtonTapped(bool isLiked) async {
-    /// send your request here
-    // final bool success= await sendRequest();
+  Future<bool> onLikeButtonTapped(bool isLiked, Story story) async {
+    var status = await _db.checkLikeStatus(
+        storyId: story.storyId, userId: _auth.user().uid);
 
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-    print('liked');
+    if (!status) {
+      await _db.addLike(userId: _auth.user().uid, storyId: story.storyId);
+    } else {
+      await _db.removeLike(storyId: story.storyId, userId: _auth.user().uid);
+    }
+
+    print(!isLiked);
     return !isLiked;
   }
 }

@@ -39,7 +39,8 @@ class NewsFeedView extends StatelessWidget {
                         return CupertinoActivityIndicator();
                       final Story story = snapshot.data[index];
 
-                      return PostContainer(story: story, model: model);
+                      return PostContainer(
+                          story: story, model: model, context: context);
                     },
                     childCount: snapshot.hasData ? snapshot.data.length : 0,
                   ),

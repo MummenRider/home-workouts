@@ -1,11 +1,19 @@
 import 'package:app/models/new_story.dart';
 import 'package:app/models/user_account.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class FirestoreService {
   final _firestore = FirebaseFirestore.instance;
 
   Stream<List<Story>> getStories() => _firestore
+      .collection('stories')
+      .snapshots()
+      .map((query) => query.docs)
+      .map((snapshot) =>
+          snapshot.map((document) => Story.fromJSON(document.data())).toList());
+
+  Stream<List<Story>> getLikes() => _firestore
       .collection('stories')
       .snapshots()
       .map((query) => query.docs)
@@ -39,4 +47,31 @@ class FirestoreService {
 
   Future<void> updateLike(String storyId, int likes) async =>
       _firestore.collection('stories').doc(storyId).update({'likes': likes++});
+
+  Future<void> addLike(
+          {@required String userId, @required String storyId}) async =>
+      _firestore
+          .collection('stories')
+          .doc(storyId)
+          .collection('likes')
+          .doc(userId)
+          .set({'likes': FieldValue.increment(1), 'userId': userId});
+  Future<void> removeLike(
+          {@required String userId, @required String storyId}) async =>
+      _firestore
+          .collection('stories')
+          .doc(storyId)
+          .collection('likes')
+          .doc(userId)
+          .delete();
+
+  Future<bool> checkLikeStatus(
+          {@required String userId, @required String storyId}) async =>
+      _firestore
+          .collection('stories')
+          .doc(storyId)
+          .collection('likes')
+          .doc(userId)
+          .get()
+          .then((snap) => snap.exists);
 }

@@ -19,7 +19,6 @@ class Story {
     @required this.userId,
     @required this.likes,
   });
-
   factory Story.fromJSON(Map<String, dynamic> json) {
     if (json == null) return null;
 

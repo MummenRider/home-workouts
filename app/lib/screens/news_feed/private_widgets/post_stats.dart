@@ -1,12 +1,20 @@
 import 'package:app/models/new_story.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+
+import '../news_feed_viewmodel.dart';
 
 class PostStats extends StatelessWidget {
   final Story story;
   final Function onLikeButtonTapped;
-  const PostStats(
-      {Key key, @required this.story, @required this.onLikeButtonTapped})
+  final NewsFeedViewModel model;
+
+  PostStats(
+      {Key key,
+      @required this.story,
+      @required this.onLikeButtonTapped,
+      @required this.model})
       : super(key: key);
 
   @override
@@ -16,39 +24,53 @@ class PostStats extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            LikeButton(
-              onTap: onLikeButtonTapped,
-              size: 18,
-              circleColor:
-                  CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
-              bubblesColor: BubblesColor(
-                dotPrimaryColor: Color(0xff33b5e5),
-                dotSecondaryColor: Color(0xff0099cc),
-              ),
-              likeBuilder: (bool isLiked) {
-                return Icon(
-                  Icons.thumb_up,
-                  color: isLiked ? Colors.blue[300] : Colors.grey,
-                  size: 18,
-                );
-              },
-              likeCount: story.likes,
-              countBuilder: (int count, bool isLiked, String text) {
-                var color = isLiked ? Colors.blue[300] : Colors.grey;
-                Widget result;
-                if (count == 0) {
-                  result = Text(
-                    "Show some love",
-                    style: TextStyle(color: color),
-                  );
-                } else
-                  result = Text(
-                    text,
-                    style: TextStyle(color: color),
-                  );
-                return result;
-              },
-            ),
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('stories')
+                    .doc(story.storyId)
+                    .collection('likes')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else {
+                    return LikeButton(
+                      onTap: onLikeButtonTapped,
+                      size: 18,
+                      circleColor: CircleColor(
+                          start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                      bubblesColor: BubblesColor(
+                        dotPrimaryColor: Color(0xff33b5e5),
+                        dotSecondaryColor: Color(0xff0099cc),
+                      ),
+                      likeBuilder: (bool isLiked) {
+                        isLiked = snapshot.data.docs.length != 0;
+                        return Icon(
+                          Icons.favorite,
+                          color: isLiked ? Colors.red[300] : Colors.grey,
+                          size: 18,
+                        );
+                      },
+                      likeCount: snapshot.data.docs.length,
+                      countBuilder: (int count, bool isLiked, String text) {
+                        var color = isLiked ? Colors.blue[300] : Colors.grey;
+
+                        Widget result;
+                        if (count == 0) {
+                          result = Text(
+                            "Show some love",
+                            style: TextStyle(color: color),
+                          );
+                        } else
+                          result = Text(
+                            'x $text',
+                            style: TextStyle(color: color),
+                          );
+                        return result;
+                      },
+                    );
+                  }
+                }),
             const SizedBox(
               width: 4.0,
             ),

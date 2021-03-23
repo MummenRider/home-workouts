@@ -6,9 +6,14 @@ import 'package:app/screens/news_feed/private_widgets/post_stats.dart';
 import 'package:flutter/material.dart';
 
 class PostContainer extends StatelessWidget {
+  final BuildContext context;
   final Story story;
   final NewsFeedViewModel model;
-  const PostContainer({Key key, @required this.story, @required this.model})
+  const PostContainer(
+      {Key key,
+      @required this.story,
+      @required this.model,
+      @required this.context})
       : super(key: key);
 
   @override
@@ -39,7 +44,10 @@ class PostContainer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: PostStats(
                 story: story,
-                onLikeButtonTapped: model.onLikeButtonTapped,
+                onLikeButtonTapped: (isLiked) async {
+                  await model.onLikeButtonTapped(isLiked, story);
+                },
+                model: model,
               ),
             ),
           ],
