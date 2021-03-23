@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TemplateTextField extends StatelessWidget {
-  TemplateTextField({
-    Key key,
-    @required TextEditingController controller,
-    @required String textLabel,
-    this.inputType,
-    this.inputFormatters,
-  })  : _controller = controller,
+  TemplateTextField(
+      {Key key,
+      @required TextEditingController controller,
+      @required String textLabel,
+      this.inputType,
+      this.inputFormatters,
+      this.maxLength})
+      : _controller = controller,
         _textLabel = textLabel,
         super(key: key);
 
@@ -16,6 +17,7 @@ class TemplateTextField extends StatelessWidget {
   final String _textLabel;
   final TextInputType inputType;
   final List<TextInputFormatter> inputFormatters;
+  final int maxLength;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -28,6 +30,7 @@ class TemplateTextField extends StatelessWidget {
         ),
       ),
       controller: _controller,
+      maxLength: maxLength ?? null,
     );
   }
 }

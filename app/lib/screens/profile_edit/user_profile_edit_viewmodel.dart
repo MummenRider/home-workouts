@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:app/models/user_account.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
-import 'package:app/services/database/image_storage.dart';
+import 'package:app/services/database/db_image_storage.dart';
 import 'package:app/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,7 +45,7 @@ class UserProfileEditViewModel extends BaseViewModel {
   }
 
   Future<void> setImageUrl() async => _imageUrl = _selectedImage != null
-      ? await _dbStorage.displayProfile(_selectedImage, _account.userId)
+      ? await _dbStorage.uploadProfileImage(_selectedImage, _account.userId)
       : _imageUrl = _account.displayProfileURL;
 
   Future saveUserAccount({

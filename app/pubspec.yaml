@@ -29,6 +29,7 @@ dependencies:
   cloud_firestore: ^1.0.0
   cupertino_icons: ^1.0.0
   curved_navigation_bar: ^0.3.7
+  date_format: ^2.0.2
   extended_image: ^3.0.0
   firebase_auth: ^1.0.0
   firebase_core: ^1.0.0
@@ -38,6 +39,7 @@ dependencies:
   get_it: ^5.0.6
   google_fonts: ^2.0.0
   image_picker: ^0.7.2+1
+  like_button: ^2.0.1
   modal_bottom_sheet: ^2.0.0
   multilevel_drawer: ^1.0.3
   permission_handler: ^6.1.0
