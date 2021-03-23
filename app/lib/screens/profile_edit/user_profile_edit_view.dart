@@ -1,7 +1,8 @@
 import 'package:app/models/user_account.dart';
+import 'package:app/public_widgets/busy_overlay.dart';
+import 'package:app/public_widgets/text_fields.dart';
 import 'package:app/screens/profile_edit/user_profile_edit_viewmodel.dart';
-import 'package:app/widgets/busy_overlay.dart';
-import 'package:app/widgets/text_fields.dart';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';

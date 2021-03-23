@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:app/app/app.router.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
-import 'package:app/services/database/image_storage.dart';
+import 'package:app/services/database/db_image_storage.dart';
 import 'package:app/services/service_locator.dart';
 import 'package:app/util/assets_to_file_converter.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:uuid/uuid.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final _dialog = locator<DialogService>();
@@ -43,14 +42,8 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
-  Future<String> uploadUserProfile() async =>
-      _dbStorage.displayProfile(_selectedImage, Uuid().v4()).then((response) {
-        _imageUrl = response;
-        notifyListeners();
-      }).catchError((e) => print(e.toString()));
-
   Future<void> setImageUrl(File imageFile) async => _imageUrl = await _dbStorage
-      .displayProfile(_selectedImage ?? imageFile, _auth.user().uid);
+      .uploadProfileImage(_selectedImage ?? imageFile, _auth.user().uid);
 
   Future<void> signUp({
     @required String firstName,

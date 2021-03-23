@@ -1,6 +1,6 @@
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
-import 'package:app/services/database/image_storage.dart';
+import 'package:app/services/database/db_image_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:stacked_services/stacked_services.dart';
 

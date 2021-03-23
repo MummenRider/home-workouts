@@ -5,6 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   final _firestore = FirebaseFirestore.instance;
 
+  Stream<List<Story>> getStories() => _firestore
+      .collection('stories')
+      .snapshots()
+      .map((query) => query.docs)
+      .map((snapshot) =>
+          snapshot.map((document) => Story.fromJSON(document.data())).toList());
+
   Future<UserAccount> setUser(UserAccount user) async => _firestore
       .collection('users')
       .doc(user.userId)
@@ -15,13 +22,11 @@ class FirestoreService {
       _firestore.collection('users').doc(userId).snapshots().map(
           (DocumentSnapshot snapshot) => UserAccount.fromJSON(snapshot.data()));
 
-  Future<UserAccount> getUser(String userId) async {
-    return await _firestore
-        .collection('users')
-        .doc(userId)
-        .get()
-        .then((snapshot) => UserAccount.fromJSON(snapshot.data()));
-  }
+  Future<UserAccount> getUser(String userId) async => _firestore
+      .collection('users')
+      .doc(userId)
+      .get()
+      .then((snapshot) => UserAccount.fromJSON(snapshot.data()));
 
   Future<void> setStory(Story story) async =>
       _firestore.collection('stories').doc(story.storyId).set(story.toJSON());
@@ -31,4 +36,7 @@ class FirestoreService {
           .collection('users')
           .doc(userId)
           .update({'displayProfileURL': imageUrl});
+
+  Future<void> updateLike(String storyId, int likes) async =>
+      _firestore.collection('stories').doc(storyId).update({'likes': likes++});
 }

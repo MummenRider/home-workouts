@@ -69,17 +69,18 @@ class StackedRouter extends RouterBase {
       );
     },
     NewsFeedView: (data) {
-      var args = data.getArgs<NewsFeedViewArguments>(
-        orElse: () => NewsFeedViewArguments(),
-      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => NewsFeedView(key: args.key),
+        builder: (context) => const NewsFeedView(),
         settings: data,
       );
     },
     AddPostView: (data) {
+      var args = data.getArgs<AddPostViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const AddPostView(),
+        builder: (context) => AddPostView(
+          key: args.key,
+          userAccount: args.userAccount,
+        ),
         settings: data,
       );
     },
@@ -118,10 +119,11 @@ class StackedRouter extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
-/// NewsFeedView arguments holder class
-class NewsFeedViewArguments {
+/// AddPostView arguments holder class
+class AddPostViewArguments {
   final Key key;
-  NewsFeedViewArguments({this.key});
+  final UserAccount userAccount;
+  AddPostViewArguments({this.key, @required this.userAccount});
 }
 
 /// UserProfileView arguments holder class

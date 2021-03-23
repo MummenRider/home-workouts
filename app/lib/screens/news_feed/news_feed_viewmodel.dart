@@ -1,5 +1,7 @@
 import 'package:app/app/app.router.dart';
+import 'package:app/models/new_story.dart';
 import 'package:app/models/user_account.dart';
+import 'package:app/screens/add_post/add_post_view.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/database/db_service.dart';
 import 'package:app/services/service_locator.dart';
@@ -7,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class NewsFeedViewModel extends BaseViewModel {
+class NewsFeedViewModel extends StreamViewModel {
   final _nav = locator<NavigationService>();
   final _auth = locator<AuthService>();
   final _dialog = locator<DialogService>();
@@ -17,14 +19,22 @@ class NewsFeedViewModel extends BaseViewModel {
   UserAccount _user;
   UserAccount get user => _user;
 
-  void goToProfile() async => _nav.navigateTo(Routes.userProfileView);
+  @override
+  Stream get stream => getStories();
 
-  loadUserInfo() {
+  Stream<List<Story>> getStories() => _db.getStories();
+
+  void goToProfile() async => _nav.navigateTo(Routes.userProfileView);
+  void goBack() async => _nav.back();
+  void loadUserInfo() {
     _db.getUserInRealTime(_auth.user().uid).listen((account) {
       _user = account;
       notifyListeners();
     });
   }
+
+  void goToAddPost() => _nav.navigateTo(Routes.addPostView,
+      arguments: AddPostViewArguments(userAccount: _user));
 
   void signOut() async => _auth.signOut().then((_) {
         _nav.pushNamedAndRemoveUntil(Routes.welcomeView);
@@ -34,4 +44,14 @@ class NewsFeedViewModel extends BaseViewModel {
           description: e.message,
         );
       });
+
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
+    /// send your request here
+    // final bool success= await sendRequest();
+
+    /// if failed, you can do nothing
+    // return success? !isLiked:isLiked;
+    print('liked');
+    return !isLiked;
+  }
 }

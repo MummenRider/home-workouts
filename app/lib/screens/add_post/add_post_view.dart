@@ -1,11 +1,14 @@
-import 'package:app/widgets/text_fields.dart';
+import 'package:app/models/user_account.dart';
+import 'package:app/public_widgets/text_fields.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import 'add_post_viewmodel.dart';
 
 class AddPostView extends StatelessWidget {
-  const AddPostView({Key key}) : super(key: key);
+  final UserAccount userAccount;
+  const AddPostView({Key key, @required this.userAccount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,7 @@ class AddPostView extends StatelessWidget {
                     TemplateTextField(
                       controller: _titleController,
                       textLabel: 'Title',
+                      maxLength: 25,
                     ),
                     const SizedBox(height: 16),
                     TemplateTextField(
@@ -60,25 +64,24 @@ class AddPostView extends StatelessWidget {
                       textLabel: 'Description',
                     ),
                     const SizedBox(height: 16),
-                    Expanded(
-                      child: GestureDetector(
-                        // When we tap we call selectImage
-                        onTap: () => model.selectImage(),
-                        child: Container(
-                          height: 250,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(10)),
-                          alignment: Alignment.center,
-                          // If the selected image is null we show "Tap to add post image"
-                          child: model.selectedImage == null
-                              ? Text(
-                                  'Tap to add post image',
-                                  style: TextStyle(color: Colors.grey[400]),
-                                )
-                              // If we have a selected image we want to show it
-                              : Image.file(model.selectedImage),
-                        ),
+                    GestureDetector(
+                      // When we tap we call selectImage
+                      onTap: () => model.selectImage(),
+                      child: Container(
+                        height: 150,
+                        width: 180,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(1)),
+                        alignment: Alignment.center,
+                        // If the selected image is null we show "Tap to add post image"
+                        child: model.selectedImage == null
+                            ? Text(
+                                'Tap to add post image',
+                                style: TextStyle(color: Colors.grey[400]),
+                              )
+                            // If we have a selected image we want to show it
+                            : Image.file(model.selectedImage),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -87,7 +90,11 @@ class AddPostView extends StatelessWidget {
                         if (_globalFormKey.currentState.validate()) {
                           model.uploadImage(
                               title: _titleController.text,
-                              description: _descriptionController.text);
+                              description: _descriptionController.text,
+                              author:
+                                  '${userAccount.firstName} ${userAccount.lastName}',
+                              datePosted: formatDate(
+                                  DateTime.now(), [yyyy, '-', mm, '-', dd]));
                         }
                       },
                       child: Text('Add Post'),
