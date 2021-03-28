@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class BusyOverlayScreen extends StatelessWidget {
   final Widget child;
@@ -20,7 +21,7 @@ class BusyOverlayScreen extends StatelessWidget {
           child,
           IgnorePointer(
             child: Opacity(
-                opacity: show ? .5 : 0.0,
+                opacity: show ? .6 : 0.0,
                 child: Container(
                   width: screenSize.width,
                   height: screenSize.height,
@@ -29,7 +30,7 @@ class BusyOverlayScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      CircularProgressIndicator(),
+                      SpinKitPouringHourglass(color: Colors.black),
                       Text(title,
                           style: TextStyle(
                               fontSize: 16.0,

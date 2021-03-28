@@ -68,8 +68,10 @@ class UserProfileEditViewModel extends BaseViewModel {
 
           _db.setUser(updateUser);
         })
-        .then((_) =>
-            _auth.updateFirebaseAuth(displayName: fname, photoURL: _imageUrl))
+        .then((_) {
+          _auth.updateFirebaseAuth(displayName: fname, photoURL: _imageUrl);
+          notifyListeners();
+        })
         .then((_) => _dialog.showDialog(
             title: 'User Account', description: 'Changes made has been saved'))
         .then((_) => _nav.back())

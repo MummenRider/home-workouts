@@ -1,3 +1,4 @@
+import 'package:app/models/comments.dart';
 import 'package:app/models/new_story.dart';
 import 'package:app/models/user_account.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -74,4 +75,20 @@ class FirestoreService {
           .doc(userId)
           .get()
           .then((snap) => snap.exists);
+
+  Future addComment(Comment comment, String storyId) async {
+    _firestore
+        .collection('stories')
+        .doc(storyId)
+        .collection('comments')
+        .doc(comment.comment)
+        .set(comment.toJSON());
+  }
+
+  Stream getComments(String storyId) => _firestore
+      .collection('stories')
+      .doc(storyId)
+      .collection('comments')
+      .orderBy('time')
+      .snapshots();
 }

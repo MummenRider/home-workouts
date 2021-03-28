@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ColorPalette {
   static const Color scaffold = Color(0xFFe7e8e6);
   static const Color postText = Color(0xFF2A292B);
+  static const Color buttonColor = Color(0xFF292929);
   static LinearGradient drawerGradient = LinearGradient(
     colors: [
       Color(hexColor('#c5796d')),

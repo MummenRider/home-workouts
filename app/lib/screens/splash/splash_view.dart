@@ -8,10 +8,15 @@ class SplashView extends StatelessWidget {
     return ViewModelBuilder<SplashViewModel>.reactive(
       onModelReady: (model) => model.hasLoggedInBefore(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('Start'),
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset(
+              "assets/splash.gif",
+            ),
+          ),
         ),
-        body: Text('Hello'),
       ),
       viewModelBuilder: () => SplashViewModel(),
     );
