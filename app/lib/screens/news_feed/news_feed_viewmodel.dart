@@ -58,4 +58,46 @@ class NewsFeedViewModel extends StreamViewModel {
     print(!isLiked);
     return !isLiked;
   }
+
+  Future<void> deletePost(String storyId) async {
+    var dialogResponse = await _dialog.showConfirmationDialog(
+      title: 'Delete this post?',
+      description: 'This post including the image will be deleted',
+      confirmationTitle: 'Yes',
+      cancelTitle: 'No',
+    );
+
+    if (!dialogResponse.confirmed) return;
+    setBusy(true);
+    _db
+        .deleteStory(storyId)
+        .then((_) => _nav.back())
+        .whenComplete(() => setBusy(false))
+        .catchError((e) {
+      _dialog.showDialog(
+        title: 'Sign in failed',
+        description: e.message,
+      );
+    });
+  }
+
+  Future<void> flagPost(Story story, String reason) async {
+    _db
+        .flagStory(
+            userId: _auth.user().uid, storyId: story.storyId, reason: reason)
+        .then((_) {
+      _dialog
+          .showDialog(
+            title: 'Story reported',
+            description:
+                'Thank you for letting us know about this. We will get back to you shortly',
+          )
+          .whenComplete(() => _nav.back());
+    });
+  }
+
+  void editStory(Story story) {
+    _nav.navigateTo(Routes.editStoryView,
+        arguments: EditStoryViewArguments(story: story));
+  }
 }

@@ -1,7 +1,7 @@
+import 'package:app/config/color_palette.dart';
 import 'package:app/public_widgets/busy_overlay.dart';
 import 'package:app/public_widgets/text_fields.dart';
 import 'package:app/screens/sign_up/sign_up_viewmodel.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:stacked/stacked.dart';
@@ -27,131 +27,169 @@ class _SignUpViewState extends State<SignUpView> {
       builder: (context, model, child) => BusyOverlayScreen(
         show: model.isBusy,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('Sign In'),
-          ),
-          body: Form(
-            key: _globalFormKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          body: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(top: 30),
+            decoration: BoxDecoration(color: Colors.black),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 60,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () => model.selectImage(),
-                        child: CircleAvatar(
-                          child: model.selectedImage != null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: ExtendedImage.file(
-                                    model.selectedImage,
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                    loadStateChanged:
-                                        (ExtendedImageState state) {
-                                      if (state.extendedImageLoadState ==
-                                          LoadState.failed) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey[300],
+                      Text(
+                        'Sign Up',
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Welcome',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(60),
+                        topRight: Radius.circular(60),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(top: 30),
+                            child: Form(
+                              key: _globalFormKey,
+                              autovalidateMode: AutovalidateMode.always,
+                              child: Padding(
+                                padding: const EdgeInsets.all(50.0),
+                                child: Column(
+                                  children: [
+                                    TemplateTextField(
+                                      controller: _firstNameController,
+                                      textLabel: 'First Name',
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TemplateTextField(
+                                      controller: _lastNameController,
+                                      textLabel: 'Last Name',
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TemplateTextField(
+                                      controller: _emailController,
+                                      textLabel: 'Email Address',
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TemplateTextField(
+                                      controller: _passwordController,
+                                      textLabel: 'Password',
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: _phoneNumberController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Phone number',
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.phone,
+                                      inputFormatters: [
+                                        PhoneInputFormatter(),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 30),
+                                    Container(
+                                      width: 200,
+                                      height: 45,
+                                      child: ElevatedButton(
+                                        child: Text(
+                                          'SIGN UP',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w900,
+                                              color: Colors.white),
+                                        ),
+                                        onPressed: () => {
+                                          if (_globalFormKey.currentState
+                                              .validate())
+                                            {
+                                              model.signUp(
+                                                firstName: _firstNameController
+                                                    .text
+                                                    .trim(),
+                                                lastName: _lastNameController
+                                                    .text
+                                                    .trim(),
+                                                emailAddress: _emailController
+                                                    .text
+                                                    .trim(),
+                                                password: _passwordController
+                                                    .text
+                                                    .trim(),
+                                                phoneNumber:
+                                                    _phoneNumberController.text
+                                                        .trim(),
+                                              )
+                                            }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary: ColorPalette.buttonColor,
+                                          onPrimary: Colors.white,
+                                          shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(50),
+                                                BorderRadius.circular(32.0),
                                           ),
-                                          width: 100,
-                                          height: 100,
-                                          child: Icon(
-                                            Icons.camera_alt,
-                                            color: Colors.grey[800],
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('Already have an account?'),
+                                        TextButton(
+                                          child: Text(
+                                            "Sign In",
+                                            style:
+                                                TextStyle(color: Colors.teal),
                                           ),
-                                        );
-                                      } else if (state.extendedImageLoadState ==
-                                          LoadState.loading) {
-                                        return Image.asset(
-                                          'assets/loading.gif',
-                                          scale: .5,
-                                          fit: BoxFit.contain,
-                                        );
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  width: 100,
-                                  height: 100,
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.grey[800],
-                                  ),
+                                          onPressed: () =>
+                                              model.goToSignInScreen(),
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
-                          radius: 53.0,
-                          backgroundColor: Colors.grey[700],
-                        ),
-                      ),
-                      TemplateTextField(
-                        controller: _firstNameController,
-                        textLabel: 'First Name',
-                      ),
-                      const SizedBox(height: 16),
-                      TemplateTextField(
-                        controller: _lastNameController,
-                        textLabel: 'Last Name',
-                      ),
-                      const SizedBox(height: 16),
-                      TemplateTextField(
-                        controller: _emailController,
-                        textLabel: 'Email address',
-                      ),
-                      const SizedBox(height: 16),
-                      TemplateTextField(
-                        controller: _passwordController,
-                        textLabel: 'Password',
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _phoneNumberController,
-                        decoration: InputDecoration(
-                          labelText: 'Phone number',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
                           ),
-                        ),
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          PhoneInputFormatter(),
                         ],
                       ),
-                      const SizedBox(height: 30),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_globalFormKey.currentState.validate()) {
-                            model.signUp(
-                              firstName: _firstNameController.text.trim(),
-                              lastName: _lastNameController.text.trim(),
-                              emailAddress: _emailController.text.trim(),
-                              password: _passwordController.text.trim(),
-                              phoneNumber: _phoneNumberController.text.trim(),
-                            );
-                          }
-                        },
-                        child: Text('Sign Up'),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.purple[200]),
-                      )
-                    ],
-                  ))
-                ],
-              ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -160,3 +198,9 @@ class _SignUpViewState extends State<SignUpView> {
     );
   }
 }
+
+
+/*
+
+
+ */

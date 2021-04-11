@@ -15,6 +15,8 @@ class LetsGetPhysical extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         scaffoldBackgroundColor: ColorPalette.scaffold,
         iconTheme: IconThemeData(color: Colors.black),
+        primaryColorBrightness: Brightness.light,
+        primaryColor: Colors.black,
         primaryTextTheme: TextTheme(
           headline5: GoogleFonts.montserrat(color: Colors.black87),
           headline6: GoogleFonts.montserrat(color: Colors.black87),

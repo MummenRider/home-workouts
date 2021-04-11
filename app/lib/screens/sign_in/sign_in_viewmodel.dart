@@ -1,4 +1,5 @@
 import 'package:app/app/app.router.dart';
+import 'package:app/screens/sign_up/sign_up_view.dart';
 import 'package:app/services/auth/auth_service.dart';
 import 'package:app/services/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,13 @@ class SignInViewModel extends BaseViewModel {
     _auth
         .signIn(email, password)
         .then((value) {
-          _nav.pushNamedAndRemoveUntil(Routes.newsFeedView);
+          Future.delayed(Duration(seconds: 3)).then((_) {
+            setBusy(false);
+            _nav.pushNamedAndRemoveUntil(Routes.newsFeedView);
+          });
         })
-        .whenComplete(() => setBusy(false))
+        .whenComplete(() =>
+            Future.delayed(Duration(seconds: 5)).then((_) => setBusy(false)))
         .catchError((e) {
           _dialog.showDialog(
             title: 'Sign in failed',
@@ -24,4 +29,7 @@ class SignInViewModel extends BaseViewModel {
           );
         });
   }
+
+  void goToSignUp() =>
+      _nav.navigateWithTransition(SignUpView(), transition: 'downToUp');
 }

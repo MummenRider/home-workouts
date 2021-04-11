@@ -25,10 +25,19 @@ class TemplateTextField extends StatelessWidget {
           value.isEmpty ? '$_textLabel should not be empty' : null,
       decoration: InputDecoration(
         labelText: _textLabel,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.grey[400],
+            width: 2.0,
+          ),
         ),
       ),
+      cursorColor: Colors.black,
       controller: _controller,
       maxLength: maxLength ?? null,
     );

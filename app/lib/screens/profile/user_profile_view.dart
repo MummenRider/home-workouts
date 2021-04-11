@@ -11,7 +11,9 @@ class UserProfileView extends StatelessWidget {
     return ViewModelBuilder<UserProfileViewModel>.reactive(
       onModelReady: (model) => model.loadUserInfo(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+        ),
         body: model.user != null
             ? Center(
                 child: Container(

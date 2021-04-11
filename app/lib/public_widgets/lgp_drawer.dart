@@ -1,4 +1,3 @@
-import 'package:app/config/color_palette.dart';
 import 'package:app/screens/news_feed/news_feed_viewmodel.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ class LGPDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiLevelDrawer(
-      gradient: ColorPalette.drawerGradient,
+      backgroundColor: Color(0xfff4f9f4),
       header: Container(
         height: size.height * 0.35,
         child: Center(

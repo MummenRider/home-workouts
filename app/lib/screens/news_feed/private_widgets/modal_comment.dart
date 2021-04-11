@@ -1,10 +1,8 @@
 import 'package:app/models/new_story.dart';
 import 'package:app/screens/news_feed/news_feed_viewmodel.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import '../comments_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
