@@ -1,3 +1,4 @@
+import 'package:app/models/comments.dart';
 import 'package:app/models/new_story.dart';
 import 'package:app/models/user_account.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,6 +40,9 @@ class FirestoreService {
   Future<void> setStory(Story story) async =>
       _firestore.collection('stories').doc(story.storyId).set(story.toJSON());
 
+  Future<void> deleteStory(String storyId) async =>
+      _firestore.collection('stories').doc(storyId).delete();
+
   Future<void> updateProfileImage(String userId, String imageUrl) async =>
       _firestore
           .collection('users')
@@ -56,6 +60,22 @@ class FirestoreService {
           .collection('likes')
           .doc(userId)
           .set({'likes': FieldValue.increment(1), 'userId': userId});
+
+  Future<void> flagStory(
+          {@required String userId,
+          @required String storyId,
+          @required String reason}) async =>
+      _firestore
+          .collection('stories')
+          .doc(storyId)
+          .collection('flags')
+          .doc(userId)
+          .set({
+        'flags': FieldValue.increment(1),
+        'userId': userId,
+        'reason': reason
+      });
+
   Future<void> removeLike(
           {@required String userId, @required String storyId}) async =>
       _firestore
@@ -74,4 +94,27 @@ class FirestoreService {
           .doc(userId)
           .get()
           .then((snap) => snap.exists);
+
+  Future<int> countNumLikes({@required String storyId}) async => _firestore
+      .collection('stories')
+      .doc(storyId)
+      .collection('likes')
+      .get()
+      .then((value) => value.size);
+
+  Future addComment(Comment comment, String storyId) async {
+    _firestore
+        .collection('stories')
+        .doc(storyId)
+        .collection('comments')
+        .doc(comment.comment)
+        .set(comment.toJSON());
+  }
+
+  Stream getComments(String storyId) => _firestore
+      .collection('stories')
+      .doc(storyId)
+      .collection('comments')
+      .orderBy('time')
+      .snapshots();
 }

@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../models/new_story.dart';
 import '../models/user_account.dart';
 import '../screens/add_post/add_post_view.dart';
 import '../screens/news_feed/news_feed_view.dart';
@@ -17,6 +18,7 @@ import '../screens/profile_edit/user_profile_edit_view.dart';
 import '../screens/sign_in/sign_in_view.dart';
 import '../screens/sign_up/sign_up_view.dart';
 import '../screens/splash/splash_view.dart';
+import '../screens/story_edit/edit_story_view.dart';
 import '../screens/welcome/welcome_view.dart';
 
 class Routes {
@@ -28,6 +30,7 @@ class Routes {
   static const String signUpView = '/sign-up-view';
   static const String userProfileView = '/user-profile-view';
   static const String userProfileEditView = '/user-profile-edit-view';
+  static const String editStoryView = '/edit-story-view';
   static const all = <String>{
     splashView,
     welcomeView,
@@ -37,6 +40,7 @@ class Routes {
     signUpView,
     userProfileView,
     userProfileEditView,
+    editStoryView,
   };
 }
 
@@ -52,6 +56,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.signUpView, page: SignUpView),
     RouteDef(Routes.userProfileView, page: UserProfileView),
     RouteDef(Routes.userProfileEditView, page: UserProfileEditView),
+    RouteDef(Routes.editStoryView, page: EditStoryView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -112,6 +117,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    EditStoryView: (data) {
+      var args = data.getArgs<EditStoryViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EditStoryView(
+          key: args.key,
+          story: args.story,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -136,4 +151,11 @@ class UserProfileViewArguments {
 class UserProfileEditViewArguments {
   final UserAccount account;
   UserProfileEditViewArguments({@required this.account});
+}
+
+/// EditStoryView arguments holder class
+class EditStoryViewArguments {
+  final Key key;
+  final Story story;
+  EditStoryViewArguments({this.key, @required this.story});
 }

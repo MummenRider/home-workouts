@@ -42,6 +42,8 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
+  void goToSignInScreen() => _nav.navigateTo(Routes.signInView);
+
   Future<void> setImageUrl(File imageFile) async => _imageUrl = await _dbStorage
       .uploadProfileImage(_selectedImage ?? imageFile, _auth.user().uid);
 

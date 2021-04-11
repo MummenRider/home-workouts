@@ -5,6 +5,7 @@ import 'package:app/screens/profile_edit/user_profile_edit_view.dart';
 import 'package:app/screens/sign_in/sign_in_view.dart';
 import 'package:app/screens/sign_up/sign_up_view.dart';
 import 'package:app/screens/splash/splash_view.dart';
+import 'package:app/screens/story_edit/edit_story_view.dart';
 import 'package:app/screens/welcome/welcome_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -17,6 +18,7 @@ import 'package:stacked/stacked_annotations.dart';
   MaterialRoute(page: SignUpView),
   MaterialRoute(page: UserProfileView),
   MaterialRoute(page: UserProfileEditView),
+  MaterialRoute(page: EditStoryView),
 ])
 class AppSetup {
   /**/

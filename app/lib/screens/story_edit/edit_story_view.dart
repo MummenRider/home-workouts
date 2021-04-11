@@ -1,21 +1,24 @@
-import 'package:app/models/user_account.dart';
+import 'package:app/models/new_story.dart';
 import 'package:app/public_widgets/text_fields.dart';
+import 'package:app/screens/story_edit/edit_story_viewmodel.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'add_post_viewmodel.dart';
-
-class AddPostView extends StatelessWidget {
-  final UserAccount userAccount;
-  const AddPostView({Key key, @required this.userAccount}) : super(key: key);
+class EditStoryView extends StatelessWidget {
+  final Story story;
+  const EditStoryView({Key key, @required this.story}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _globalFormKey = GlobalKey<FormState>();
     final _titleController = TextEditingController();
     final _descriptionController = TextEditingController();
-    return ViewModelBuilder<AddPostViewModel>.reactive(
+    return ViewModelBuilder<EditStoryViewModel>.reactive(
+      onModelReady: (model) {
+        _titleController.text = story?.title ?? '';
+        _descriptionController.text = story?.description ?? '';
+      },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.white,
@@ -76,10 +79,7 @@ class AddPostView extends StatelessWidget {
                         alignment: Alignment.center,
                         // If the selected image is null we show "Tap to add post image"
                         child: model.selectedImage == null
-                            ? Text(
-                                'Tap to add post image',
-                                style: TextStyle(color: Colors.grey[400]),
-                              )
+                            ? Image.network(story.imageURL)
                             // If we have a selected image we want to show it
                             : Image.file(model.selectedImage),
                       ),
@@ -91,8 +91,9 @@ class AddPostView extends StatelessWidget {
                           model.uploadImage(
                             title: _titleController.text,
                             description: _descriptionController.text,
-                            author:
-                                '${userAccount.firstName} ${userAccount.lastName}',
+                            author: story.author,
+                            storyId: story.storyId,
+                            imageUrl: story.imageURL,
                             datePosted: formatDate(
                               DateTime.now(),
                               [yyyy, '-', mm, '-', dd],
@@ -111,7 +112,7 @@ class AddPostView extends StatelessWidget {
           ),
         ),
       ),
-      viewModelBuilder: () => AddPostViewModel(),
+      viewModelBuilder: () => EditStoryViewModel(),
     );
   }
 }

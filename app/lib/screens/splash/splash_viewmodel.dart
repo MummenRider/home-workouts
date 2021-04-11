@@ -11,8 +11,10 @@ class SplashViewModel extends BaseViewModel {
 
   void hasLoggedInBefore() async => _auth.hasUserLoggedInBefore().then((user) {
         return user == true
-            ? _nav.replaceWith(Routes.newsFeedView)
-            : _nav.replaceWith(Routes.welcomeView);
+            ? Future.delayed(Duration(seconds: 3))
+                .then((_) => _nav.replaceWith(Routes.newsFeedView))
+            : Future.delayed(Duration(seconds: 3))
+                .then((_) => _nav.replaceWith(Routes.welcomeView));
       }).catchError((e) {
         _dialog.showDialog(
           title: 'Error',

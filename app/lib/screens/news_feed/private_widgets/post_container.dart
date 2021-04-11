@@ -1,9 +1,12 @@
 import 'package:app/models/new_story.dart';
 import 'package:app/screens/news_feed/news_feed_viewmodel.dart';
+import 'package:app/screens/news_feed/private_widgets/modal_edit.dart';
 import 'package:app/screens/news_feed/private_widgets/post_content_story.dart';
 import 'package:app/screens/news_feed/private_widgets/post_image_story.dart';
 import 'package:app/screens/news_feed/private_widgets/post_stats.dart';
+import 'package:app/screens/news_feed/private_widgets/modal_report.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class PostContainer extends StatelessWidget {
   final BuildContext context;
@@ -37,6 +40,34 @@ class PostContainer extends StatelessWidget {
                 PostContentStory(
                   story: story,
                   navigateToDetails: model.goToAddPost,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (story.userId == model.userAccount.uid) {
+                      showCupertinoModalBottomSheet(
+                        context: context,
+                        builder: (context) => ModalEdit(
+                          model: model,
+                          story: story,
+                        ),
+                        barrierColor: Colors.black38,
+                      );
+                    } else {
+                      showCupertinoModalBottomSheet(
+                        context: context,
+                        builder: (context) => ModalInfo(
+                          story: story,
+                          model: model,
+                        ),
+                        barrierColor: Colors.black38,
+                      );
+                    }
+                  },
+                  child: Icon(
+                    Icons.more_vert,
+                    size: 20,
+                    color: Colors.black87,
+                  ),
                 ),
               ],
             ),

@@ -34,6 +34,7 @@ class UserProfileEditView extends StatelessWidget {
         show: model.isBusy,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.white,
             leading: IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () => model.cancelEditProfile()),
@@ -49,44 +50,6 @@ class UserProfileEditView extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // GestureDetector(
-                      //   onTap: () => model.selectImage(),
-                      //   child: ExtendedImage.network(
-                      //     model.imageUrl,
-                      //     width: 120,
-                      //     height: 120,
-                      //     fit: BoxFit.cover,
-                      //     border: Border.all(color: Colors.grey[800], width: 3.0),
-                      //     shape: BoxShape.circle,
-                      //     borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      // loadStateChanged: (ExtendedImageState state) {
-                      //   if (state.extendedImageLoadState ==
-                      //       LoadState.failed) {
-                      //     return Container(
-                      //       decoration: BoxDecoration(
-                      //         color: Colors.grey[300],
-                      //         borderRadius: BorderRadius.circular(50),
-                      //       ),
-                      //       width: 100,
-                      //       height: 100,
-                      //       child: Icon(
-                      //         Icons.camera_alt,
-                      //         color: Colors.grey[800],
-                      //       ),
-                      //     );
-                      //   } else if (state.extendedImageLoadState ==
-                      //       LoadState.loading) {
-                      //     return Image.asset(
-                      //       'assets/loading.gif',
-                      //       scale: .5,
-                      //       fit: BoxFit.contain,
-                      //     );
-                      //   } else {
-                      //     return null;
-                      //   }
-                      // },
-                      //   ),
-                      // ),
                       GestureDetector(
                         onTap: () => model.selectImage(),
                         child: CircleAvatar(
