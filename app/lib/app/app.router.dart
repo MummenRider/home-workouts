@@ -11,6 +11,7 @@ import 'package:stacked/stacked.dart';
 
 import '../models/new_story.dart';
 import '../models/user_account.dart';
+import '../screens/activity/activity_view.dart';
 import '../screens/add_post/add_post_view.dart';
 import '../screens/news_feed/news_feed_view.dart';
 import '../screens/profile/user_profile_view.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const String userProfileView = '/user-profile-view';
   static const String userProfileEditView = '/user-profile-edit-view';
   static const String editStoryView = '/edit-story-view';
+  static const String activityView = '/activity-view';
   static const all = <String>{
     splashView,
     welcomeView,
@@ -41,6 +43,7 @@ class Routes {
     userProfileView,
     userProfileEditView,
     editStoryView,
+    activityView,
   };
 }
 
@@ -57,6 +60,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.userProfileView, page: UserProfileView),
     RouteDef(Routes.userProfileEditView, page: UserProfileEditView),
     RouteDef(Routes.editStoryView, page: EditStoryView),
+    RouteDef(Routes.activityView, page: ActivityView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -124,6 +128,12 @@ class StackedRouter extends RouterBase {
           key: args.key,
           story: args.story,
         ),
+        settings: data,
+      );
+    },
+    ActivityView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ActivityView(),
         settings: data,
       );
     },

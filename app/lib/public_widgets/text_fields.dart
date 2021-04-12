@@ -6,6 +6,7 @@ class TemplateTextField extends StatelessWidget {
       {Key key,
       @required TextEditingController controller,
       @required String textLabel,
+      this.obsecureText = false,
       this.inputType,
       this.inputFormatters,
       this.maxLength})
@@ -18,9 +19,11 @@ class TemplateTextField extends StatelessWidget {
   final TextInputType inputType;
   final List<TextInputFormatter> inputFormatters;
   final int maxLength;
+  final bool obsecureText;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obsecureText,
       validator: (String value) =>
           value.isEmpty ? '$_textLabel should not be empty' : null,
       decoration: InputDecoration(

@@ -74,12 +74,12 @@ class LGPDrawer extends StatelessWidget {
       children: [
         MLMenuItem(
             leading: Icon(Icons.person),
-            content: Text('My Profile'),
+            content: Text('My Account'),
             onClick: () => model.goToProfile()),
         MLMenuItem(
           leading: Icon(Icons.fitness_center_outlined),
           content: Text('My Activites'),
-          onClick: () {},
+          onClick: () => model.goToActivity(),
         ),
         MLMenuItem(
           leading: Icon(Entypo.newspaper),

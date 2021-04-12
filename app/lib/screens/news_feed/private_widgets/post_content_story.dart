@@ -47,7 +47,7 @@ class PostContentStory extends StatelessWidget {
                 fontSize: 13.0,
               ),
             ),
-            const SizedBox(height: 28.0),
+            const SizedBox(height: 10.0),
           ],
         ),
       ),

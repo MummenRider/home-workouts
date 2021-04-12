@@ -1,4 +1,5 @@
 import 'package:app/models/new_story.dart';
+import 'package:app/public_widgets/circular_btn.dart';
 import 'package:app/public_widgets/text_fields.dart';
 import 'package:app/screens/story_edit/edit_story_viewmodel.dart';
 import 'package:date_format/date_format.dart';
@@ -23,7 +24,7 @@ class EditStoryView extends StatelessWidget {
         appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text(
-              'Add post',
+              'Update Post',
               style: TextStyle(color: Colors.black87),
             ),
             leading: GestureDetector(
@@ -85,8 +86,8 @@ class EditStoryView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         if (_globalFormKey.currentState.validate()) {
                           model.uploadImage(
                             title: _titleController.text,
@@ -101,10 +102,9 @@ class EditStoryView extends StatelessWidget {
                           );
                         }
                       },
-                      child: Text('Add Post'),
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.purple[200]),
-                    )
+                      child: CircularButton(
+                          textLabel: 'Update Post', color: Colors.teal[400]),
+                    ),
                   ],
                 ))
               ],

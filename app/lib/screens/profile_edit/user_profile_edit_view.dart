@@ -17,7 +17,7 @@ class UserProfileEditView extends StatelessWidget {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneNumberController = TextEditingController();
-
+  final _aboutMeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<UserProfileEditViewModel>.reactive(
@@ -27,7 +27,7 @@ class UserProfileEditView extends StatelessWidget {
         _lastNameController.text = account?.lastName ?? '';
         _emailController.text = account?.email ?? '';
         _phoneNumberController.text = account?.phoneNumber ?? '';
-
+        _aboutMeController.text = account?.aboutMe ?? '';
         model.setUserProfile(account);
       },
       builder: (context, model, child) => BusyOverlayScreen(
@@ -118,6 +118,18 @@ class UserProfileEditView extends StatelessWidget {
                         textLabel: 'Last Name',
                       ),
                       const SizedBox(height: 16),
+                      TextFormField(
+                        controller: _aboutMeController,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          alignLabelWithHint: true,
+                          labelText: 'Tell us about yourself',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       TemplateTextField(
                         controller: _emailController,
                         textLabel: 'Email address',
@@ -143,6 +155,7 @@ class UserProfileEditView extends StatelessWidget {
                             model.saveUserAccount(
                               fname: _firstNameController.text.trim(),
                               lname: _lastNameController.text.trim(),
+                              aboutMe: _aboutMeController.text.trim(),
                               email: _emailController.text.trim(),
                               phoneNumber: _phoneNumberController.text.trim(),
                             );

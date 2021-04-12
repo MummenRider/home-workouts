@@ -1,3 +1,4 @@
+import 'package:app/screens/activity/activity_view.dart';
 import 'package:app/screens/add_post/add_post_view.dart';
 import 'package:app/screens/news_feed/news_feed_view.dart';
 import 'package:app/screens/profile/user_profile_view.dart';
@@ -19,6 +20,7 @@ import 'package:stacked/stacked_annotations.dart';
   MaterialRoute(page: UserProfileView),
   MaterialRoute(page: UserProfileEditView),
   MaterialRoute(page: EditStoryView),
+  MaterialRoute(page: ActivityView),
 ])
 class AppSetup {
   /**/
