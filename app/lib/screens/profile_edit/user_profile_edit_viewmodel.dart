@@ -53,18 +53,19 @@ class UserProfileEditViewModel extends BaseViewModel {
     @required lname,
     @required email,
     @required phoneNumber,
+    @required aboutMe,
   }) async {
     setBusy(true);
     setImageUrl()
         .then((_) {
           var updateUser = UserAccount(
-            firstName: fname,
-            lastName: lname,
-            email: email,
-            userId: _account.userId,
-            phoneNumber: phoneNumber,
-            displayProfileURL: _imageUrl,
-          );
+              firstName: fname,
+              lastName: lname,
+              email: email,
+              userId: _account.userId,
+              phoneNumber: phoneNumber,
+              displayProfileURL: _imageUrl,
+              aboutMe: aboutMe);
 
           _db.setUser(updateUser);
         })

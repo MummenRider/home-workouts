@@ -9,6 +9,7 @@ class FirestoreService {
 
   Stream<List<Story>> getStories() => _firestore
       .collection('stories')
+      .orderBy('datePosted')
       .snapshots()
       .map((query) => query.docs)
       .map((snapshot) =>
@@ -111,10 +112,13 @@ class FirestoreService {
         .set(comment.toJSON());
   }
 
-  Stream getComments(String storyId) => _firestore
+  Stream<QuerySnapshot> getComments(String storyId) => _firestore
       .collection('stories')
       .doc(storyId)
       .collection('comments')
       .orderBy('time')
       .snapshots();
+
+  Stream<QuerySnapshot> getUsersInfo(String userId) =>
+      _firestore.collection('users').snapshots();
 }

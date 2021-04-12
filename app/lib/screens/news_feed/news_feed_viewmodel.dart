@@ -24,8 +24,12 @@ class NewsFeedViewModel extends StreamViewModel {
 
   Stream<List<Story>> getStories() => _db.getStories();
 
-  void goToProfile() async => _nav.navigateTo(Routes.userProfileView);
+  void goToProfile() async =>
+      _nav.navigateTo(Routes.userProfileView).whenComplete(() => _nav.back());
+  void goToActivity() async =>
+      _nav.navigateTo(Routes.activityView).whenComplete(() => _nav.back());
   void goBack() async => _nav.back();
+
   void loadUserInfo() {
     _db.getUserInRealTime(_auth.user().uid).listen((account) {
       _user = account;

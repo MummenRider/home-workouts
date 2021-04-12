@@ -44,6 +44,7 @@ dependencies:
   like_button: ^2.0.1
   modal_bottom_sheet: ^2.0.0
   multilevel_drawer: ^1.0.3
+  percent_indicator: ^3.0.1
   permission_handler: ^6.1.0
   stacked: ^1.9.5
   stacked_services: ^0.7.3

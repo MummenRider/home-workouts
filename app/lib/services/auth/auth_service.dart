@@ -17,6 +17,7 @@ class AuthService {
     @required String lastName,
     @required String phoneNumber,
     @required String imageUrl,
+    @required String aboutMe,
   }) async =>
       _firebaseAuth
           .createUserWithEmailAndPassword(
@@ -31,6 +32,7 @@ class AuthService {
           phoneNumber: phoneNumber,
           userId: authResponse.user.uid,
           displayProfileURL: imageUrl,
+          aboutMe: aboutMe,
         ));
       });
 

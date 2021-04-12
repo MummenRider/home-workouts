@@ -75,6 +75,7 @@ class SignInView extends StatelessWidget {
                                     TemplateTextField(
                                       controller: _passwordController,
                                       textLabel: 'Password',
+                                      obsecureText: true,
                                     ),
                                     const SizedBox(height: 30),
                                     Container(

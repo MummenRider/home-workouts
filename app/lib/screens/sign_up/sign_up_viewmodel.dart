@@ -53,6 +53,7 @@ class SignUpViewModel extends BaseViewModel {
     @required String emailAddress,
     @required String password,
     @required String phoneNumber,
+    @required String aboutMe,
   }) async {
     setBusy(true);
     _auth
@@ -63,6 +64,7 @@ class SignUpViewModel extends BaseViewModel {
           imageUrl: _imageUrl,
           lastName: lastName,
           phoneNumber: phoneNumber,
+          aboutMe: aboutMe,
         )
         .then((_) => getImageFileFromAssets('/default.png'))
         .then((imageFile) => setImageUrl(imageFile))

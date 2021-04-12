@@ -22,6 +22,7 @@ class _SignUpViewState extends State<SignUpView> {
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
     final _phoneNumberController = TextEditingController();
+    final _aboutMeController = TextEditingController();
 
     return ViewModelBuilder<SignUpViewModel>.reactive(
       builder: (context, model, child) => BusyOverlayScreen(
@@ -35,7 +36,7 @@ class _SignUpViewState extends State<SignUpView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 60,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -76,12 +77,12 @@ class _SignUpViewState extends State<SignUpView> {
                       child: Column(
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(top: 30),
                             child: Form(
                               key: _globalFormKey,
                               autovalidateMode: AutovalidateMode.always,
                               child: Padding(
-                                padding: const EdgeInsets.all(50.0),
+                                padding: const EdgeInsets.only(
+                                    left: 50.0, right: 50.0, top: 30),
                                 child: Column(
                                   children: [
                                     TemplateTextField(
@@ -92,6 +93,19 @@ class _SignUpViewState extends State<SignUpView> {
                                     TemplateTextField(
                                       controller: _lastNameController,
                                       textLabel: 'Last Name',
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: _aboutMeController,
+                                      maxLines: 3,
+                                      decoration: InputDecoration(
+                                        alignLabelWithHint: true,
+                                        labelText: 'Tell us about yourself',
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                        ),
+                                      ),
                                     ),
                                     const SizedBox(height: 16),
                                     TemplateTextField(
@@ -141,6 +155,8 @@ class _SignUpViewState extends State<SignUpView> {
                                                 lastName: _lastNameController
                                                     .text
                                                     .trim(),
+                                                aboutMe:
+                                                    _aboutMeController.text,
                                                 emailAddress: _emailController
                                                     .text
                                                     .trim(),
