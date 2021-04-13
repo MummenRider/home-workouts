@@ -8,7 +8,8 @@ class UserAccount {
   final String displayProfileURL;
   final String userId;
   final String aboutMe;
-
+  final String caloriesGoal;
+  final String currentKcal;
   UserAccount({
     @required this.firstName,
     @required this.lastName,
@@ -17,6 +18,8 @@ class UserAccount {
     @required this.userId,
     @required this.displayProfileURL,
     @required this.aboutMe,
+    this.caloriesGoal = "2300",
+    this.currentKcal = "0",
   });
 
   factory UserAccount.fromJSON(Map<String, dynamic> json) {
@@ -30,6 +33,8 @@ class UserAccount {
       phoneNumber: json['phone'],
       displayProfileURL: json['displayProfileURL'],
       aboutMe: json['aboutMe'],
+      caloriesGoal: json['caloriesGoal'],
+      currentKcal: json['currentKcal'],
     );
   }
 
@@ -41,6 +46,8 @@ class UserAccount {
         'userId': userId,
         'displayProfileURL': displayProfileURL,
         'aboutMe': aboutMe,
+        'caloriesGoal': caloriesGoal,
+        'currentKcal': currentKcal,
       };
 
   @override

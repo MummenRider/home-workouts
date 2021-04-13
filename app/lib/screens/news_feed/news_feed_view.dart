@@ -3,6 +3,7 @@ import 'package:app/public_widgets/lgp_drawer.dart';
 import 'package:app/screens/news_feed/private_widgets/post_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 
 import 'news_feed_viewmodel.dart';
@@ -36,7 +37,7 @@ class NewsFeedView extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       if (!snapshot.hasData)
-                        return CupertinoActivityIndicator();
+                        return SpinKitDualRing(color: Colors.black);
                       final Story story = snapshot.data[index];
 
                       return PostContainer(

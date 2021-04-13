@@ -25,4 +25,6 @@ class UserProfileViewModel extends BaseViewModel {
     _nav.navigateTo(Routes.userProfileEditView,
         arguments: UserProfileEditViewArguments(account: _user));
   }
+
+  void goBack() => _nav.back();
 }

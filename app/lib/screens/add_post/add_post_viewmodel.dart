@@ -82,8 +82,10 @@ class AddPostViewModel extends BaseViewModel {
         })
         .then((_) => _dialog.showDialog(
             title: 'Story Added', description: 'Your story has been posted'))
-        .then((_) => _nav.popRepeated(2))
-        .whenComplete(() => setBusy(false))
+        .then((_) {
+          setBusy(false);
+          _nav.popRepeated(2);
+        })
         .catchError((e) {
           _dialog.showDialog(
             title: 'Failed to post story',
