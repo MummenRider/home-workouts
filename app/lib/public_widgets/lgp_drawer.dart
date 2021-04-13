@@ -1,6 +1,7 @@
 import 'package:app/screens/news_feed/news_feed_viewmodel.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:multilevel_drawer/multilevel_drawer.dart';
 
@@ -50,10 +51,8 @@ class LGPDrawer extends StatelessWidget {
                     );
                   } else if (state.extendedImageLoadState ==
                       LoadState.loading) {
-                    return Image.asset(
-                      'assets/loading.gif',
-                      scale: .5,
-                      fit: BoxFit.contain,
+                    return SpinKitChasingDots(
+                      color: Colors.teal,
                     );
                   } else {
                     return null;
@@ -64,7 +63,7 @@ class LGPDrawer extends StatelessWidget {
                 height: 25.0,
               ),
               Text(
-                '${model.user.firstName} ${model.user.lastName} ',
+                '${model.user.firstName} ${model.user.lastName}',
                 style: Theme.of(context).primaryTextTheme.headline6,
               )
             ],
@@ -78,7 +77,7 @@ class LGPDrawer extends StatelessWidget {
             onClick: () => model.goToProfile()),
         MLMenuItem(
           leading: Icon(Icons.fitness_center_outlined),
-          content: Text('My Activites'),
+          content: Text('My Calorie Goal'),
           onClick: () => model.goToActivity(),
         ),
         MLMenuItem(

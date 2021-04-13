@@ -28,6 +28,16 @@ class FirestoreService {
       .set(user.toJSON())
       .then((_) => user);
 
+  Future<void> setCurrentCalories(String currentCal, String userId) async =>
+      _firestore.collection('users').doc(userId).set({
+        'currentKcal': currentCal,
+      }, SetOptions(merge: true));
+
+  Future<void> setCalorieGoal(String currentCal, String userId) async =>
+      _firestore.collection('users').doc(userId).set({
+        'caloriesGoal': currentCal,
+      }, SetOptions(merge: true));
+
   Stream<UserAccount> getUserInRealTime(String userId) =>
       _firestore.collection('users').doc(userId).snapshots().map(
           (DocumentSnapshot snapshot) => UserAccount.fromJSON(snapshot.data()));

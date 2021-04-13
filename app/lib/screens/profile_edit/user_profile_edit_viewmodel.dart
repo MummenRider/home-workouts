@@ -59,13 +59,16 @@ class UserProfileEditViewModel extends BaseViewModel {
     setImageUrl()
         .then((_) {
           var updateUser = UserAccount(
-              firstName: fname,
-              lastName: lname,
-              email: email,
-              userId: _account.userId,
-              phoneNumber: phoneNumber,
-              displayProfileURL: _imageUrl,
-              aboutMe: aboutMe);
+            firstName: fname,
+            lastName: lname,
+            email: email,
+            userId: _account.userId,
+            phoneNumber: phoneNumber,
+            displayProfileURL: _imageUrl,
+            aboutMe: aboutMe,
+            caloriesGoal: _account.caloriesGoal,
+            currentKcal: _account.currentKcal,
+          );
 
           _db.setUser(updateUser);
         })

@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 
-class CircularButton extends StatelessWidget {
-  const CircularButton(
+class RoundBtnBorder extends StatelessWidget {
+  const RoundBtnBorder(
       {Key key,
       @required this.textLabel,
-      @required this.color,
+      @required this.bkgcolor,
       this.width,
-      this.textSize})
+      this.textColor,
+      this.fontSize,
+      this.buttonVerticalPadding})
       : super(key: key);
   final String textLabel;
-  final Color color;
+  final Color bkgcolor;
+  final Color textColor;
   final double width;
-  final double textSize;
+  final double fontSize;
+  final double buttonVerticalPadding;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: color,
         borderRadius: BorderRadius.all(
           Radius.circular(20),
         ),
+        border: Border.all(color: bkgcolor, width: 1.5),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: 7,
+        vertical: buttonVerticalPadding ?? 7,
         horizontal: 12,
       ),
       width: width,
@@ -30,8 +34,8 @@ class CircularButton extends StatelessWidget {
         child: Text(
           textLabel,
           style: TextStyle(
-            fontSize: textSize ?? 18,
-            color: Colors.white,
+            fontSize: fontSize,
+            color: textColor,
             fontWeight: FontWeight.w600,
           ),
         ),
